@@ -1,6 +1,16 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Duke {
+    private String[] tasks;
+    private int totalTasks;
+
+    public Duke() {
+        this.tasks = new String[100];
+        this.totalTasks = 0;
+    }
+
+    // For displaying multi-line response
     private void displayResponse(String[] lines) {
         String bar = "____________________________________________________________";
 
@@ -12,8 +22,17 @@ public class Duke {
         System.out.println();
     }
 
+    // For displaying single-line response
     private void displayResponse(String line) {
         displayResponse(new String[]{line});
+    }
+
+    private void displayTasks() {
+        String[] formatted = new String[this.totalTasks];
+        for (int i = 0; i < this.totalTasks; i++) {
+            formatted[i] = String.format("%d. %s", i + 1, this.tasks[i]);
+        }
+        displayResponse(formatted);
     }
 
     private void run() {
@@ -21,10 +40,16 @@ public class Duke {
 
         displayResponse(new String[]{"Hello! I'm Duke", "What can I do for you?"});
 
-        String cmd = sc.next();
+        String cmd = sc.nextLine();
         while (!cmd.equals("bye")) {
-            displayResponse(cmd);
-            cmd = sc.next();
+            if (cmd.equals("list")) {
+                displayTasks();
+            } else {
+                this.tasks[this.totalTasks++] = cmd;
+                displayResponse("added: " + cmd);
+            }
+
+            cmd = sc.nextLine();
         }
 
         displayResponse("Bye. Hope to see you again soon!");
