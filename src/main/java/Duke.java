@@ -1,12 +1,11 @@
 import java.util.Scanner;
-import java.util.ArrayList;
 
 public class Duke {
-    private String[] tasks;
+    private Task[] tasks;
     private int totalTasks;
 
     public Duke() {
-        this.tasks = new String[100];
+        this.tasks = new Task[100];
         this.totalTasks = 0;
     }
 
@@ -30,7 +29,7 @@ public class Duke {
     private void displayTasks() {
         String[] formatted = new String[this.totalTasks];
         for (int i = 0; i < this.totalTasks; i++) {
-            formatted[i] = String.format("%d. %s", i + 1, this.tasks[i]);
+            formatted[i] = String.format("%d. %s", i + 1, this.tasks[i].getDescription());
         }
         displayResponse(formatted);
     }
@@ -45,7 +44,7 @@ public class Duke {
             if (cmd.equals("list")) {
                 displayTasks();
             } else {
-                this.tasks[this.totalTasks++] = cmd;
+                this.tasks[this.totalTasks++] = new Task(cmd);
                 displayResponse("added: " + cmd);
             }
 
