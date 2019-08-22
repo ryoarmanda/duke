@@ -1,13 +1,11 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Duke {
-    private static final int MAX_TASKS = 100;
-    private Task[] tasks;
-    private int totalTasks;
+    private ArrayList<Task> tasks;
 
     public Duke() {
-        this.tasks = new Task[MAX_TASKS];
-        this.totalTasks = 0;
+        this.tasks = new ArrayList<>();
     }
 
     // For displaying multi-line response
@@ -28,18 +26,19 @@ public class Duke {
     }
 
     private void displayTasks() {
-        String[] responses = new String[this.totalTasks + 1];
+        ArrayList<String> responses = new ArrayList<>();
 
-        responses[0] = "Here are the tasks in your list:";
-        for (int i = 0; i < this.totalTasks; i++) {
-            responses[i + 1] = String.format("%d.%s", i + 1, this.tasks[i]);
+        responses.add("Here are the tasks in your list:");
+        for (int i = 0; i < this.tasks.size(); i++) {
+            String formatted = String.format("%d.%s", i + 1, this.tasks.get(i));
+            responses.add(formatted);
         }
 
-        displayResponse(responses);
+        displayResponse(responses.toArray(new String[]{}));
     }
 
     private void markTaskDone(int taskIndex) {
-        Task task = this.tasks[taskIndex];
+        Task task = this.tasks.get(taskIndex);
         task.markAsDone();
         displayResponse(new String[]{
             "Nice! I've marked this task as done:",
@@ -48,11 +47,21 @@ public class Duke {
     }
 
     private void addTask(Task task) {
-        this.tasks[this.totalTasks++] = task;
+        this.tasks.add(task);
         displayResponse(new String[]{
             "Got it. I've added this task:",
             "  " + task,
-            "Now you have " + this.totalTasks + " tasks in the list."
+            "Now you have " + this.tasks.size() + " tasks in the list."
+        });
+    }
+
+    private void deleteTask(int taskIndex) {
+        Task task = this.tasks.get(taskIndex);
+        this.tasks.remove(taskIndex);
+        displayResponse(new String[]{
+                "Noted. I've removed this task:",
+                "  " + task,
+                "Now you have " + this.tasks.size() + " tasks in the list."
         });
     }
 
@@ -87,6 +96,9 @@ public class Duke {
             case "event":
                 String[] event_args = tokens[1].split(" /at ");
                 addTask(new Event(event_args[0], event_args[1]));
+                return false;
+            case "delete":
+                deleteTask(Integer.parseInt(tokens[1]) - 1);
                 return false;
             default:
                 throw new DukeException("\u2639 OOPS!!! I'm sorry, but I don't know what that means :-(");
