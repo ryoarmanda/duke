@@ -47,26 +47,44 @@ public class Duke {
         });
     }
 
-    private void addTask(String description) {
-        this.tasks[this.totalTasks++] = new Task(description);
-        displayResponse("added: " + description);
+    private void addTask(Task task) {
+        this.tasks[this.totalTasks++] = task;
+        displayResponse(new String[]{
+            "Got it. I've added this task:",
+            "  " + task,
+            "Now you have " + this.totalTasks + " tasks in the list."
+        });
     }
 
+    // Handles input to its appropriate functions, returns boolean
+    // that signifies whether the infinite loop should be stopped.
     private boolean handleInput(String input) {
-        String[] tokens = input.split(" ");
-        String cmd = tokens[0];
+        // Command-only input
+        if (input.equals("bye")) {
+            return true;
+        } else if (input.equals("list")) {
+            displayTasks();
+            return false;
+        }
 
+        String[] tokens = input.split(" ", 2);
+        String cmd = tokens[0];
         switch (cmd) {
-            case "bye":
-                return true;
-            case "list":
-                displayTasks();
-                return false;
             case "done":
                 markTaskDone(Integer.parseInt(tokens[1]) - 1);
                 return false;
+            case "todo":
+                addTask(new Todo(tokens[1]));
+                return false;
+            case "deadline":
+                String[] deadline_args = tokens[1].split(" /by ");
+                addTask(new Deadline(deadline_args[0], deadline_args[1]));
+                return false;
+            case "event":
+                String[] event_args = tokens[1].split(" /at ");
+                addTask(new Event(event_args[0], event_args[1]));
+                return false;
             default:
-                addTask(input);
                 return false;
         }
     }
