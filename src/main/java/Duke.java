@@ -58,7 +58,7 @@ public class Duke {
 
     // Handles input to its appropriate functions, returns boolean
     // that signifies whether the infinite loop should be stopped.
-    private boolean handleInput(String input) {
+    private boolean handleInput(String input) throws DukeException {
         // Command-only input
         if (input.equals("bye")) {
             return true;
@@ -74,8 +74,12 @@ public class Duke {
                 markTaskDone(Integer.parseInt(tokens[1]) - 1);
                 return false;
             case "todo":
-                addTask(new Todo(tokens[1]));
-                return false;
+                try {
+                    addTask(new Todo(tokens[1]));
+                    return false;
+                } catch (IndexOutOfBoundsException e) {
+                    throw new DukeException("\u2639 OOPS!!! The description of a todo cannot be empty.");
+                }
             case "deadline":
                 String[] deadline_args = tokens[1].split(" /by ");
                 addTask(new Deadline(deadline_args[0], deadline_args[1]));
@@ -85,7 +89,7 @@ public class Duke {
                 addTask(new Event(event_args[0], event_args[1]));
                 return false;
             default:
-                return false;
+                throw new DukeException("\u2639 OOPS!!! I'm sorry, but I don't know what that means :-(");
         }
     }
 
@@ -99,7 +103,11 @@ public class Duke {
 
         boolean stop = false;
         while (!stop) {
-            stop = handleInput(sc.nextLine());
+            try {
+                stop = handleInput(sc.nextLine());
+            } catch (DukeException e) {
+                displayResponse(e.getMessage());
+            }
         }
 
         displayResponse("Bye. Hope to see you again soon!");
