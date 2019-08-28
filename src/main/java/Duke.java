@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.time.LocalDateTime;
 
 public class Duke {
     private ArrayList<Task> tasks;
@@ -91,11 +92,15 @@ public class Duke {
                 }
             case "deadline":
                 String[] deadline_args = tokens[1].split(" /by ");
-                addTask(new Deadline(deadline_args[0], deadline_args[1]));
+                LocalDateTime by = LocalDateTime.parse(deadline_args[1], Task.DATETIME_FORMAT);
+                addTask(new Deadline(deadline_args[0], by));
                 return false;
             case "event":
                 String[] event_args = tokens[1].split(" /at ");
-                addTask(new Event(event_args[0], event_args[1]));
+                String[] timeRange = event_args[1].split(" - ");
+                LocalDateTime startTime = LocalDateTime.parse(timeRange[0], Task.DATETIME_FORMAT);
+                LocalDateTime endTime = LocalDateTime.parse(timeRange[1], Task.DATETIME_FORMAT);
+                addTask(new Event(event_args[0], startTime, endTime));
                 return false;
             case "delete":
                 deleteTask(Integer.parseInt(tokens[1]) - 1);
