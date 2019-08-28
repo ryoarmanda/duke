@@ -1,4 +1,4 @@
-﻿list
+list
 todo Test Todo
 deadline Test Deadline /by Test Deadline
 event Test Event /at Test Event
@@ -6,3 +6,4 @@ list
 done 1
 list
 bye
+
