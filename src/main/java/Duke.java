@@ -1,10 +1,10 @@
-import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 public class Duke {
     private static final String FILE_PATH = "./data/duke.txt";
@@ -97,11 +97,15 @@ public class Duke {
                 }
             case "deadline":
                 String[] deadline_args = tokens[1].split(" /by ");
-                addTask(new Deadline(deadline_args[0], deadline_args[1]));
+                LocalDateTime by = LocalDateTime.parse(deadline_args[1], Task.DATETIME_FORMAT);
+                addTask(new Deadline(deadline_args[0], by));
                 return false;
             case "event":
                 String[] event_args = tokens[1].split(" /at ");
-                addTask(new Event(event_args[0], event_args[1]));
+                String[] timeRange = event_args[1].split(" - ");
+                LocalDateTime startTime = LocalDateTime.parse(timeRange[0], Task.DATETIME_FORMAT);
+                LocalDateTime endTime = LocalDateTime.parse(timeRange[1], Task.DATETIME_FORMAT);
+                addTask(new Event(event_args[0], startTime, endTime));
                 return false;
             case "delete":
                 deleteTask(Integer.parseInt(tokens[1]) - 1);
@@ -127,12 +131,13 @@ public class Duke {
                 task = new Todo(desc);
                 break;
             case "D":
-                String by = cmd[3];
+                LocalDateTime by = LocalDateTime.parse(cmd[3], Task.DATETIME_FORMAT);
                 task = new Deadline(desc, by);
                 break;
             case "E":
-                String at = cmd[3];
-                task = new Event(desc, at);
+                LocalDateTime startTime = LocalDateTime.parse(cmd[3], Task.DATETIME_FORMAT);
+                LocalDateTime endTime = LocalDateTime.parse(cmd[4], Task.DATETIME_FORMAT);
+                task = new Event(desc, startTime, endTime);
                 break;
             }
 
@@ -154,9 +159,11 @@ public class Duke {
             if (task instanceof Todo) {
                 s = String.join(" | ", "T", done, desc);
             } else if (task instanceof Deadline) {
-                s = String.join(" | ", "D", done, desc, ((Deadline) task).getTime());
+                s = String.join(" | ", "D", done, desc, ((Deadline) task).getTime().format(Task.DATETIME_FORMAT));
             } else if (task instanceof Event) {
-                s = String.join(" | ", "E", done, desc, ((Event) task).getTime());
+                s = String.join(" | ", "E", done, desc,
+                        ((Event) task).getStartTime().format(Task.DATETIME_FORMAT),
+                        ((Event) task).getEndTime().format(Task.DATETIME_FORMAT));
             }
             s += "\n";
             fw.write(s);

@@ -1,17 +1,27 @@
-public class Event extends Task {
-    String time;
+import java.time.LocalDateTime;
 
-    public Event(String description, String time) {
+public class Event extends Task {
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
+
+    public Event(String description, LocalDateTime startTime, LocalDateTime endTime) {
         super(description);
-        this.time = time;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
-    public String getTime() {
-        return this.time;
+    public LocalDateTime getStartTime() {
+        return this.startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return this.endTime;
     }
 
     @Override
     public String toString() {
-        return String.format("[E]%s (at: %s)", super.toString(), this.time);
+        return String.format("[E]%s (at: %s - %s)", super.toString(),
+                this.startTime.format(super.DATETIME_FORMAT),
+                this.endTime.format(super.DATETIME_FORMAT));
     }
 }
