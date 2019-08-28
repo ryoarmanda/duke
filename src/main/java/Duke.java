@@ -1,7 +1,13 @@
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class Duke {
+    private static final String FILE_PATH = "./data/duke.txt";
     private ArrayList<Task> tasks;
 
     public Duke() {
@@ -105,7 +111,66 @@ public class Duke {
         }
     }
 
+    private void readFromFile() throws FileNotFoundException {
+        File f = new File(FILE_PATH);
+        Scanner sc = new Scanner(f);
+        while (sc.hasNextLine()) {
+            String[] cmd = sc.nextLine().split(" \\| ");
+
+            String type = cmd[0];
+            boolean isDone = cmd[1].equals("1");
+            String desc = cmd[2];
+
+            Task task = new Task(desc);
+            switch(type) {
+            case "T":
+                task = new Todo(desc);
+                break;
+            case "D":
+                String by = cmd[3];
+                task = new Deadline(desc, by);
+                break;
+            case "E":
+                String at = cmd[3];
+                task = new Event(desc, at);
+                break;
+            }
+
+            if (isDone) {
+                task.markAsDone();
+            }
+
+            tasks.add(task);
+        }
+    }
+
+    private void writeToFile() throws IOException {
+        FileWriter fw = new FileWriter(FILE_PATH);
+        for (Task task : tasks) {
+            String desc = task.getDescription();
+            String done = task.isDone() ? "1" : "0";
+
+            String s = "";
+            if (task instanceof Todo) {
+                s = String.join(" | ", "T", done, desc);
+            } else if (task instanceof Deadline) {
+                s = String.join(" | ", "D", done, desc, ((Deadline) task).getTime());
+            } else if (task instanceof Event) {
+                s = String.join(" | ", "E", done, desc, ((Event) task).getTime());
+            }
+            s += "\n";
+            fw.write(s);
+        }
+        fw.close();
+    }
+
     private void run() {
+        try {
+            readFromFile();
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        }
+
         Scanner sc = new Scanner(System.in);
 
         displayResponse(new String[]{
@@ -123,6 +188,12 @@ public class Duke {
         }
 
         displayResponse("Bye. Hope to see you again soon!");
+
+        try {
+            writeToFile();
+        } catch (IOException e) {
+            System.out.println("Cannot write to file: " + e.getMessage());
+        }
     }
 
     public static void main(String[] args) {
