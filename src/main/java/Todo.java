@@ -3,8 +3,11 @@ public class Todo extends Task {
         super(description);
     }
 
-    @Override
-    public String toString() {
-        return "[T]" + super.toString();
+    public String storageFormat() {
+        return String.format("T | %s", super.storageFormat());
+    }
+
+    public String displayFormat() {
+        return "[T]" + super.displayFormat();
     }
 }
