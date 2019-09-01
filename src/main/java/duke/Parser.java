@@ -34,6 +34,9 @@ public class Parser {
         case "delete":
             checkExistence(tokens, 2, "Please supply data for the task.");
             return new DeleteCommand(Integer.parseInt(tokens[1]) - 1);
+        case "find":
+            checkExistence(tokens, 2, "Please supply data for the task.");
+            return new FindCommand(tokens[1]);
         case "bye":
             return new ByeCommand();
         default:

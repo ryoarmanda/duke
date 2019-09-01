@@ -62,6 +62,14 @@ public class Ui {
         System.out.println("Now you have " + taskCount + " tasks in the list");
     }
 
+    public void displayFindTask(TaskList matched) {
+        System.out.println("Here are the matching tasks in your list:");
+        for (int i = 0; i < matched.totalTasks(); i++) {
+            Task t = matched.getTask(i);
+            System.out.printf("%d.%s\n", i + 1, t.displayFormat());
+        }
+    }
+
     public void displayBye() {
         System.out.println("Bye. Hope to see you again soon!");
     }
