@@ -1,3 +1,11 @@
+package duke.command;
+
+import duke.DukeException;
+import duke.Storage;
+import duke.TaskList;
+import duke.Ui;
+import duke.task.*;
+
 public class AddCommand extends Command {
     private TaskType type;
     private String description;
@@ -27,7 +35,7 @@ public class AddCommand extends Command {
             break;
         default:
             // TODO: Create error message
-            throw new DukeException("Wrong task type.");
+            throw new DukeException("Wrong duke.task type.");
         }
 
         tasks.addTask(task);

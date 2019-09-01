@@ -1,3 +1,8 @@
+package duke;
+
+import duke.command.*;
+import duke.task.*;
+
 public class Parser {
     public static Command parseCommand(String input) throws DukeException {
         String[] tokens = input.split(" ", 2);
@@ -25,10 +30,10 @@ public class Parser {
             return new AddCommand(TaskType.EVENT, args[0], times[0], times[1]);
         case "done":
             checkExistence(tokens, 2, "Please supply data for the task.");
-            return new DoneCommand(Integer.parseInt(tokens[1]));
+            return new DoneCommand(Integer.parseInt(tokens[1]) - 1);
         case "delete":
             checkExistence(tokens, 2, "Please supply data for the task.");
-            return new DeleteCommand(Integer.parseInt(tokens[1]));
+            return new DeleteCommand(Integer.parseInt(tokens[1]) - 1);
         case "bye":
             return new ByeCommand();
         default:

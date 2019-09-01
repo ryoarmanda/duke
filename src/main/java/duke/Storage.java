@@ -1,9 +1,13 @@
+package duke;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
+
+import duke.task.Task;
 
 public class Storage {
     private String filePath;
@@ -22,7 +26,7 @@ public class Storage {
             }
         } catch (FileNotFoundException e) {
             // TODO: Create error message
-            throw new DukeException("Storage file not found.");
+            throw new DukeException("duke.Storage file not found.");
         }
 
         return tasks;
