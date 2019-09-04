@@ -24,11 +24,12 @@ public class DeleteCommand extends Command {
      * @param tasks The task list.
      * @param ui The Ui object.
      * @param storage The Storage object.
+     * @return The response string.
      */
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
         Task task = tasks.getTask(this.taskIndex);
         tasks.deleteTask(this.taskIndex);
         storage.write(tasks);
-        ui.displayDeleteTask(task, tasks.totalTasks());
+        return ui.displayDeleteTask(task, tasks.totalTasks());
     }
 }

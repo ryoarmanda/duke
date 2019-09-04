@@ -24,11 +24,12 @@ public class DoneCommand extends Command {
      * @param tasks The task list.
      * @param ui The Ui object.
      * @param storage The Storage object.
+     * @return The response string.
      */
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
         Task task = tasks.getTask(this.taskIndex);
         task.markAsDone();
         storage.write(tasks);
-        ui.displayMarkedDone(task);
+        return ui.displayMarkedDone(task);
     }
 }

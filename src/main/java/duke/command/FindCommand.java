@@ -24,8 +24,9 @@ public class FindCommand extends Command {
      * @param tasks The task list.
      * @param ui The Ui object.
      * @param storage The Storage object.
+     * @return The response string.
      */
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
         TaskList matchedTasks = new TaskList();
 
         for (int i = 0; i < tasks.totalTasks(); i++) {
@@ -35,6 +36,6 @@ public class FindCommand extends Command {
             }
         }
 
-        ui.displayFindTask(matchedTasks);
+        return ui.displayFindTask(matchedTasks);
     }
 }

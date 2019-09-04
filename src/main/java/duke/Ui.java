@@ -5,71 +5,49 @@ import java.util.Scanner;
 import duke.task.Task;
 
 public class Ui {
-    Scanner sc;
-
-    /**
-     * Creates a Ui object.
-     */
-    public Ui() {
-        this.sc = new Scanner(System.in);
-    }
-
-    /**
-     * Reads a line from the command-line input.
-     *
-     * @return The line read from the input.
-     */
-    public String readInput() {
-        return this.sc.nextLine();
-    }
-
-    /**
-     * Displays the separator line for responses.
-     */
-    public void displayLine() {
-        String line = "____________________________________________________________";
-        System.out.println(line);
-    }
-
     /**
      * Displays file load error message.
+     *
+     * @return The response string.
      */
-    public void displayLoadingError() {
-        this.displayLine();
-        System.out.println("There was an error in loading data from file.");
-        this.displayLine();
+    public String displayLoadingError() {
+        return "There was an error in loading data from file.";
     }
 
     /**
      * Displays welcome message.
+     *
+     * @return The response string.
      */
-    public void displayWelcome() {
-        this.displayLine();
-        System.out.println("Hello! I'm Duke");
-        System.out.println("What can I do for you?");
-        this.displayLine();
+    public String displayWelcome() {
+        return "Hello! I'm Duke\n" +
+                "What can I do for you?";
     }
 
     /**
      * Displays error response.
      *
      * @param message The error message.
+     * @return The response string.
      */
-    public void displayError(String message) {
-        System.out.println(":( OOPS!!! " + message);
+    public String displayError(String message) {
+        return ":( OOPS!!! " + message;
     }
 
     /**
      * Displays the list of tasks.
      *
      * @param taskList The task list.
+     * @return The response string.
      */
-    public void displayTasks(TaskList taskList) {
-        System.out.println("Here are the tasks in your list:");
+    public String displayTasks(TaskList taskList) {
+        StringBuilder response = new StringBuilder("Here are the tasks in your list:\n");
         for (int i = 0; i < taskList.totalTasks(); i++) {
             Task t = taskList.getTask(i);
-            System.out.printf("%d.%s\n", i + 1, t.displayFormat());
+            response.append(String.format("%d.%s\n", i + 1, t.displayFormat()));
         }
+
+        return response.toString();
     }
 
     /**
@@ -77,21 +55,23 @@ public class Ui {
      *
      * @param t The task that is just added.
      * @param taskCount The taskCount after the addition.
+     * @return The response string.
      */
-    public void displayAddTask(Task t, int taskCount) {
-        System.out.println("Got it. I've added this task:");
-        System.out.println("  " + t.displayFormat());
-        System.out.println("Now you have " + taskCount + " tasks in the list.");
+    public String displayAddTask(Task t, int taskCount) {
+        return "Got it. I've added this task:\n" +
+                "  " + t.displayFormat() + "\n" +
+                "Now you have " + taskCount + " tasks in the list.";
     }
 
     /**
      * Displays the response after a task is marked done.
      *
      * @param t The task that has just been marked done.
+     * @return The response string.
      */
-    public void displayMarkedDone(Task t) {
-        System.out.println("Nice! I've marked this task as done:");
-        System.out.println("  " + t.displayFormat());
+    public String displayMarkedDone(Task t) {
+        return "Nice! I've marked this task as done:\n" +
+                "  " + t.displayFormat() + "\n";
     }
 
     /**
@@ -99,30 +79,36 @@ public class Ui {
      *
      * @param t The task that was just deleted.
      * @param taskCount The task count after the deletion.
+     * @return The response string.
      */
-    public void displayDeleteTask(Task t, int taskCount) {
-        System.out.println("Noted. I've removed this task:");
-        System.out.println("  " + t.displayFormat());
-        System.out.println("Now you have " + taskCount + " tasks in the list");
+    public String displayDeleteTask(Task t, int taskCount) {
+        return "Noted. I've removed this task:\n" +
+                "  " + t.displayFormat() + "\n" +
+                "Now you have " + taskCount + " tasks in the list";
     }
 
     /**
      * Displays the found tasks after the find command.
      *
      * @param matched The list of matched tasks.
+     * @return The response string.
      */
-    public void displayFindTask(TaskList matched) {
-        System.out.println("Here are the matching tasks in your list:");
+    public String displayFindTask(TaskList matched) {
+        StringBuilder response = new StringBuilder("Here are the matching tasks in your list:");
         for (int i = 0; i < matched.totalTasks(); i++) {
             Task t = matched.getTask(i);
-            System.out.printf("%d.%s\n", i + 1, t.displayFormat());
+            response.append(String.format("%d.%s\n", i + 1, t.displayFormat()));
         }
+
+        return response.toString();
     }
 
     /**
      * Displays goodbye message.
+     *
+     * @return The response string.
      */
-    public void displayBye() {
-        System.out.println("Bye. Hope to see you again soon!");
+    public String displayBye() {
+        return "Bye. Hope to see you again soon!";
     }
 }
