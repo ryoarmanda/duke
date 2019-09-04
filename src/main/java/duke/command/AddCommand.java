@@ -38,8 +38,9 @@ public class AddCommand extends Command {
      * @param tasks The task list.
      * @param ui The Ui object.
      * @param storage The Storage object.
+     * @return The response string.
      */
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws DukeException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws DukeException {
         Task task;
 
         switch (this.type) {
@@ -59,6 +60,6 @@ public class AddCommand extends Command {
 
         tasks.addTask(task);
         storage.write(tasks);
-        ui.displayAddTask(task, tasks.totalTasks());
+        return ui.displayAddTask(task, tasks.totalTasks());
     }
 }

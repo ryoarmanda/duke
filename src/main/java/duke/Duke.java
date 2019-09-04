@@ -23,26 +23,12 @@ public class Duke {
         }
     }
 
-    private void run() {
-        this.ui.displayWelcome();
-
-        boolean isExit = false;
-        while (!isExit) {
-            try {
-                String input = this.ui.readInput();
-                this.ui.displayLine();
-                Command c = Parser.parseCommand(input);
-                c.execute(this.tasks, this.ui, this.storage);
-                isExit = c.isExit();
-            } catch (DukeException e) {
-                this.ui.displayError(e.getMessage());
-            } finally {
-                this.ui.displayLine();
-            }
+    public String getResponse(String input) {
+        try {
+            Command c = Parser.parseCommand(input);
+            return c.execute(this.tasks, this.ui, this.storage);
+        } catch (DukeException e) {
+            return e.getMessage();
         }
-    }
-
-    public static void main(String[] args) {
-        new Duke("./data/duke.txt").run();
     }
 }

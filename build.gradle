@@ -3,6 +3,7 @@ plugins {
     id 'application'
     id 'checkstyle'
     id 'com.github.johnrengelman.shadow' version '5.1.0'
+    id 'org.openjfx.javafxplugin' version '0.0.7'
 }
 
 dependencies {
@@ -17,7 +18,7 @@ repositories {
 }
 
 application {
-    mainClassName = "duke.Duke"
+    mainClassName = "Launcher"
 }
 
 run {
@@ -37,4 +38,9 @@ shadowJar {
     archiveVersion = "0.1"
     archiveClassifier = null
     archiveAppendix = null
+}
+
+javafx {
+    version = "11.0.2"
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
