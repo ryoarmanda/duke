@@ -7,6 +7,11 @@ public class Duke {
     private Storage storage;
     private TaskList tasks;
 
+    /**
+     * Creates a Duke object.
+     *
+     * @param filePath The file path of the local save data.
+     */
     public Duke(String filePath) {
         this.ui = new Ui();
         this.storage = new Storage(filePath);
