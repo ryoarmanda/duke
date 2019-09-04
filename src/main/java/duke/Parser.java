@@ -14,6 +14,14 @@ import duke.task.TaskType;
 import duke.task.Todo;
 
 public class Parser {
+    /**
+     * Parses the input string coming from command-line.
+     * If there are any incomplete or invalid inputs, an exception is thrown.
+     *
+     * @param input The input string from the command-line.
+     * @return Command The command describing the action.
+     * @throws DukeException if the input syntax is invalid.
+     */
     public static Command parseCommand(String input) throws DukeException {
         String[] tokens = input.split(" ", 2);
         String[] args, times;
@@ -54,6 +62,14 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses the data from a line of a local file.
+     * If there are any incomplete or invalid inputs, an exception is thrown.
+     *
+     * @param input A line from the local save file.
+     * @return Task The task parsed from input.
+     * @throws DukeException if the input is not valid.
+     */
     public static Task parseTask(String input) throws DukeException {
         String[] cmd = input.split(" \\| ");
 

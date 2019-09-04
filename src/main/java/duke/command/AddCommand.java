@@ -18,6 +18,12 @@ public class AddCommand extends Command {
     private String time;
     private String timeEnd;
 
+    /**
+     * Creates an AddCommand object.
+     *
+     * @param type The task's type.
+     * @param args A varargs describing the arguments for the command.
+     */
     public AddCommand(TaskType type, String... args) {
         super(false);
         this.type = type;
@@ -26,6 +32,13 @@ public class AddCommand extends Command {
         this.timeEnd = args.length > 2 ? args[2] : "";
     }
 
+    /**
+     * Executes the add command.
+     *
+     * @param tasks The task list.
+     * @param ui The Ui object.
+     * @param storage The Storage object.
+     */
     public void execute(TaskList tasks, Ui ui, Storage storage) throws DukeException {
         Task task;
 
