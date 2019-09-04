@@ -41,6 +41,6 @@ public class Task {
      * @return A string of the formatted data.
      */
     public String displayFormat() {
-        return String.format("[%s] %s", this.isDone ? "\u2714" : "\u2718", this.description);
+        return String.format("[%s] %s", this.isDone ? "+" : " ", this.description);
     }
 }

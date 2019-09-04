@@ -8,11 +8,23 @@ import duke.task.Task;
 public class FindCommand extends Command {
     private String keyword;
 
+    /**
+     * Creates a FindCommand object.
+     *
+     * @param keyword The keyword to find through all the tasks.
+     */
     public FindCommand(String keyword) {
         super(false);
         this.keyword = keyword;
     }
 
+    /**
+     * Executes the find command.
+     *
+     * @param tasks The task list.
+     * @param ui The Ui object.
+     * @param storage The Storage object.
+     */
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         TaskList matchedTasks = new TaskList();
 

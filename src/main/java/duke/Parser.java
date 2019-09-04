@@ -5,6 +5,7 @@ import duke.command.ByeCommand;
 import duke.command.Command;
 import duke.command.DeleteCommand;
 import duke.command.DoneCommand;
+import duke.command.FindCommand;
 import duke.command.ListCommand;
 
 import duke.task.Deadline;
@@ -24,7 +25,8 @@ public class Parser {
      */
     public static Command parseCommand(String input) throws DukeException {
         String[] tokens = input.split(" ", 2);
-        String[] args, times;
+        String[] args;
+        String[] times;
         switch (tokens[0]) {
         case "list":
             return new ListCommand();
@@ -74,7 +76,7 @@ public class Parser {
         String[] cmd = input.split(" \\| ");
 
         Task task;
-        switch(cmd[0]) {
+        switch (cmd[0]) {
         case "T":
             task = new Todo(cmd[2]);
             break;
