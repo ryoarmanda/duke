@@ -6,11 +6,20 @@ import duke.task.Task;
 
 public class Ui {
     /**
+     * Displays file load success message.
+     *
+     * @return The response string.
+     */
+    public String displayLoadSuccess() {
+        return "Data loaded successfully!";
+    }
+
+    /**
      * Displays file load error message.
      *
      * @return The response string.
      */
-    public String displayLoadingError() {
+    public String displayLoadError() {
         return "There was an error in loading data from file.";
     }
 
@@ -20,8 +29,8 @@ public class Ui {
      * @return The response string.
      */
     public String displayWelcome() {
-        return "Hello! I'm Duke\n" +
-                "What can I do for you?";
+        return "Hello! I'm Duke\n"
+                + "What can I do for you?";
     }
 
     /**
@@ -58,9 +67,9 @@ public class Ui {
      * @return The response string.
      */
     public String displayAddTask(Task t, int taskCount) {
-        return "Got it. I've added this task:\n" +
-                "  " + t.displayFormat() + "\n" +
-                "Now you have " + taskCount + " tasks in the list.";
+        return "Got it. I've added this task:\n"
+                + "  " + t.displayFormat() + "\n"
+                + "Now you have " + taskCount + " tasks in the list.";
     }
 
     /**
@@ -70,8 +79,8 @@ public class Ui {
      * @return The response string.
      */
     public String displayMarkedDone(Task t) {
-        return "Nice! I've marked this task as done:\n" +
-                "  " + t.displayFormat() + "\n";
+        return "Nice! I've marked this task as done:\n"
+                + "  " + t.displayFormat() + "\n";
     }
 
     /**
@@ -82,9 +91,9 @@ public class Ui {
      * @return The response string.
      */
     public String displayDeleteTask(Task t, int taskCount) {
-        return "Noted. I've removed this task:\n" +
-                "  " + t.displayFormat() + "\n" +
-                "Now you have " + taskCount + " tasks in the list";
+        return "Noted. I've removed this task:\n"
+                + "  " + t.displayFormat() + "\n"
+                + "Now you have " + taskCount + " tasks in the list";
     }
 
     /**

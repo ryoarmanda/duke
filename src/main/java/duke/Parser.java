@@ -87,7 +87,6 @@ public class Parser {
             task = new Event(cmd[2], cmd[3], cmd[4]);
             break;
         default:
-            // TODO: Create error message
             throw new DukeException("There is a faulty data in file.");
         }
 
@@ -99,6 +98,8 @@ public class Parser {
     }
 
     private static void checkExistence(String[] args, int length, String errMessage) throws DukeException {
+        assert args != null : "Supplied array is null";
+
         if (args.length < length) {
             throw new DukeException(errMessage);
         }

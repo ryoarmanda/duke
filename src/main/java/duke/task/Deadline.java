@@ -16,7 +16,9 @@ public class Deadline extends Task {
         this.time = LocalDateTime.parse(time, Task.DATETIME_FORMAT);
     }
 
-    public String getFormattedTime() {
+    private String getFormattedTime() {
+        assert this.time != null : "No time stored!";
+
         return this.time.format(Task.DATETIME_FORMAT);
     }
 
