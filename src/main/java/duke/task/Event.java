@@ -19,11 +19,15 @@ public class Event extends Task {
         this.endTime = LocalDateTime.parse(endTime, Task.DATETIME_FORMAT);
     }
 
-    public String getFormattedStartTime() {
+    private String getFormattedStartTime() {
+        assert this.startTime != null : "No start time stored!";
+
         return this.startTime.format(Task.DATETIME_FORMAT);
     }
 
-    public String getFormattedEndTime() {
+    private String getFormattedEndTime() {
+        assert this.endTime != null : "No end time stored!";
+
         return this.endTime.format(Task.DATETIME_FORMAT);
     }
 

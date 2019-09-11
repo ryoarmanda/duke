@@ -31,10 +31,22 @@ public class MainWindow extends AnchorPane {
         duke = d;
     }
 
+    /**
+     * Handles the display of startup responses from Duke.
+     */
+    public void handleDukeStartup() {
+        String welcomeResponse = duke.getWelcomeResponse();
+        String loadResponse = duke.getLoadResponse();
+        dialogContainer.getChildren().addAll(
+                DialogBox.getDukeDialog(welcomeResponse, dukeImage),
+                DialogBox.getDukeDialog(loadResponse, dukeImage)
+        );
+    }
+
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
-        String response = duke.getResponse(input);
+        String response = duke.getCommandResponse(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
                 DialogBox.getDukeDialog(response, dukeImage)
