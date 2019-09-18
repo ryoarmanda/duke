@@ -36,11 +36,17 @@ public class DialogBox extends HBox {
         ObservableList<Node> tmp = FXCollections.observableArrayList(this.getChildren());
         Collections.reverse(tmp);
         getChildren().setAll(tmp);
-        setAlignment(Pos.TOP_LEFT);
     }
 
     public static DialogBox getUserDialog(String text, Image img) {
-        return new DialogBox(text, img);
+        var db = new DialogBox(text, img);
+        db.dialog.setStyle(
+            "-fx-border-width: 0 1 0 0;" +
+            "-fx-border-color: black;" +
+            "-fx-label-padding: 5 10 5 10"
+        );
+        db.dialog.setAlignment(Pos.CENTER_RIGHT);
+        return db;
     }
 
     /**
@@ -53,6 +59,12 @@ public class DialogBox extends HBox {
     public static DialogBox getDukeDialog(String text, Image img) {
         var db = new DialogBox(text, img);
         db.flip();
+        db.dialog.setStyle(
+            "-fx-border-width: 0 0 0 1;" +
+            "-fx-border-color: black;" +
+            "-fx-label-padding: 5 10 5 10"
+        );
+        db.dialog.setAlignment(Pos.CENTER_LEFT);
         return db;
     }
 }
