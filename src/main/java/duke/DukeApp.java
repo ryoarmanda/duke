@@ -9,15 +9,15 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+public class DukeApp extends Application {
     public static Stage stage;
     private Duke duke = new Duke("./data/duke.txt");
 
     @Override
     public void start(Stage stage) {
         try {
-            Main.stage = stage;
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
+            DukeApp.stage = stage;
+            FXMLLoader fxmlLoader = new FXMLLoader(DukeApp.class.getResource("/view/MainWindow.fxml"));
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setTitle("Duke");

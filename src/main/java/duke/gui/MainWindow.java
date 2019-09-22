@@ -11,7 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 import duke.Duke;
-import duke.Main;
+import duke.DukeApp;
 import duke.utility.DukeResponse;
 
 public class MainWindow extends AnchorPane {
@@ -62,7 +62,7 @@ public class MainWindow extends AnchorPane {
 
         if (response.isExit()) {
             PauseTransition pause = new PauseTransition(Duration.seconds(3));
-            pause.setOnFinished(event -> Main.stage.hide());
+            pause.setOnFinished(event -> DukeApp.stage.hide());
             pause.play();
         }
     }
