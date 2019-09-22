@@ -1,4 +1,4 @@
-package duke;
+package duke.utility;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
 
+import duke.exception.DukeException;
 import duke.task.Task;
 
 public class Storage {
@@ -37,7 +38,6 @@ public class Storage {
                 tasks.add(Parser.parseTask(sc.nextLine()));
             }
         } catch (FileNotFoundException e) {
-            // TODO: Create error message
             throw new DukeException("duke.Storage file not found.");
         }
 
@@ -60,7 +60,6 @@ public class Storage {
             }
             fw.close();
         } catch (IOException e) {
-            // TODO: Create error message
             throw new DukeException("Cannot save tasks to file.");
         }
     }

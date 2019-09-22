@@ -1,8 +1,10 @@
 package duke.command;
 
-import duke.Storage;
-import duke.TaskList;
-import duke.Ui;
+import duke.exception.DukeException;
+import duke.exception.DukeValidationException;
+import duke.utility.Storage;
+import duke.utility.TaskList;
+import duke.utility.Ui;
 import duke.task.Task;
 
 public class DoneCommand extends Command {
@@ -16,6 +18,12 @@ public class DoneCommand extends Command {
     public DoneCommand(int taskIndex) {
         super(false);
         this.taskIndex = taskIndex;
+    }
+
+    public void validate(TaskList taskList) throws DukeValidationException {
+        if (this.taskIndex >= taskList.totalTasks()) {
+            throw new DukeValidationException("There is no task number " + this.taskIndex);
+        }
     }
 
     /**

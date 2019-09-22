@@ -1,21 +1,22 @@
 package duke.task;
 
-import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 public class Task {
-    static final DateTimeFormatter DATETIME_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
-
     private String description;
-    private boolean isDone;
+    private TaskStatus status;
+    private TaskPriority priority;
 
     /**
      * Creates a Task object.
      *
-     * @param description The task description.
+     * @param description The description of the task.
+     * @param priority The priority of the task.
      */
-    public Task(String description) {
+    public Task(String description, TaskPriority priority) {
         this.description = description;
-        this.isDone = false;
+        this.status = TaskStatus.ONGOING;
+        this.priority = Objects.requireNonNull(priority);
     }
 
     public String getDescription() {
@@ -23,7 +24,7 @@ public class Task {
     }
 
     public void markAsDone() {
-        this.isDone = true;
+        this.status = TaskStatus.DONE;
     }
 
     /**
@@ -32,7 +33,11 @@ public class Task {
      * @return A string of the formatted data.
      */
     public String storageFormat() {
-        return String.format("%s | %s", this.isDone ? "1" : "0", this.description);
+        return String.format("%s | %s | %s",
+                this.priority.storageFormat(),
+                this.status.storageFormat(),
+                this.description
+        );
     }
 
     /**
@@ -41,6 +46,10 @@ public class Task {
      * @return A string of the formatted data.
      */
     public String displayFormat() {
-        return String.format("[%s] %s", this.isDone ? "+" : " ", this.description);
+        return String.format("[%s][%s] %s",
+                this.priority.displayFormat(),
+                this.status.displayFormat(),
+                this.description
+        );
     }
 }

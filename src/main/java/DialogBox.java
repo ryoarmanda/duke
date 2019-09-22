@@ -41,9 +41,9 @@ public class DialogBox extends HBox {
     public static DialogBox getUserDialog(String text, Image img) {
         var db = new DialogBox(text, img);
         db.dialog.setStyle(
-            "-fx-border-width: 0 1 0 0;" +
-            "-fx-border-color: black;" +
-            "-fx-label-padding: 5 10 5 10"
+            "-fx-border-width: 0 1 0 0;"
+            + "-fx-border-color: black;"
+            + "-fx-label-padding: 5 10 5 10"
         );
         db.dialog.setAlignment(Pos.CENTER_RIGHT);
         return db;
@@ -60,9 +60,9 @@ public class DialogBox extends HBox {
         var db = new DialogBox(text, img);
         db.flip();
         db.dialog.setStyle(
-            "-fx-border-width: 0 0 0 1;" +
-            "-fx-border-color: black;" +
-            "-fx-label-padding: 5 10 5 10"
+            "-fx-border-width: 0 0 0 1;"
+            + "-fx-border-color: black;"
+            + "-fx-label-padding: 5 10 5 10"
         );
         db.dialog.setAlignment(Pos.CENTER_LEFT);
         return db;

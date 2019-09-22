@@ -1,8 +1,9 @@
 package duke.command;
 
-import duke.Storage;
-import duke.TaskList;
-import duke.Ui;
+import duke.exception.DukeValidationException;
+import duke.utility.Storage;
+import duke.utility.TaskList;
+import duke.utility.Ui;
 
 public abstract class Command {
     private boolean isExit;
@@ -19,6 +20,10 @@ public abstract class Command {
 
     public boolean isExit() {
         return this.isExit;
+    }
+
+    public void validate(TaskList tasks) throws DukeValidationException {
+        // No validation by default.
     }
 
     public abstract String execute(TaskList tasks, Ui ui, Storage storage);

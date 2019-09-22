@@ -1,6 +1,4 @@
-package duke;
-
-import java.util.Scanner;
+package duke.utility;
 
 import duke.task.Task;
 

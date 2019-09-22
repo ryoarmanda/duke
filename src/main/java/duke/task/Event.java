@@ -1,34 +1,24 @@
 package duke.task;
 
-import java.time.LocalDateTime;
+import java.util.Objects;
+
+import duke.utility.DateTime;
 
 public class Event extends Task {
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private DateTime startTime;
+    private DateTime endTime;
 
     /**
      * Creates an Event object.
      *
-     * @param description The task description.
-     * @param startTime The string of start time.
-     * @param endTime The string of end time.
+     * @param description The description of the task.
+     * @param startTime The starting date and time.
+     * @param endTime The ending date and time.
      */
-    public Event(String description, String startTime, String endTime) {
-        super(description);
-        this.startTime = LocalDateTime.parse(startTime, Task.DATETIME_FORMAT);
-        this.endTime = LocalDateTime.parse(endTime, Task.DATETIME_FORMAT);
-    }
-
-    private String getFormattedStartTime() {
-        assert this.startTime != null : "No start time stored!";
-
-        return this.startTime.format(Task.DATETIME_FORMAT);
-    }
-
-    private String getFormattedEndTime() {
-        assert this.endTime != null : "No end time stored!";
-
-        return this.endTime.format(Task.DATETIME_FORMAT);
+    public Event(String description, TaskPriority priority, DateTime startTime, DateTime endTime) {
+        super(description, priority);
+        this.startTime = Objects.requireNonNull(startTime);
+        this.endTime = Objects.requireNonNull(endTime);
     }
 
     /**
@@ -38,7 +28,10 @@ public class Event extends Task {
      */
     public String storageFormat() {
         return String.format("E | %s | %s | %s",
-                super.storageFormat(), getFormattedStartTime(), getFormattedEndTime());
+                super.storageFormat(),
+                this.startTime.format(),
+                this.endTime.format()
+        );
     }
 
     /**
@@ -48,6 +41,9 @@ public class Event extends Task {
      */
     public String displayFormat() {
         return "[E]" + String.format("%s (at: %s - %s)",
-                super.displayFormat(), getFormattedStartTime(), getFormattedEndTime());
+                super.displayFormat(),
+                this.startTime.format(),
+                this.endTime.format()
+        );
     }
 }

@@ -1,5 +1,7 @@
 package duke.command;
 
+import duke.exception.UnknownCommandTypeException;
+
 public enum CommandType {
     LIST("list"),
     TODO("todo"),
@@ -7,6 +9,7 @@ public enum CommandType {
     EVENT("event"),
     DONE("done"),
     DELETE("delete"),
+    FIND("find"),
     BYE("bye");
 
     private final String cmd;
@@ -15,8 +18,13 @@ public enum CommandType {
         this.cmd = cmd;
     }
 
-    @Override
-    public String toString() {
-        return this.cmd;
+    public static CommandType parse(String cmd) throws UnknownCommandTypeException {
+        for (CommandType c : values()) {
+            if (c.cmd.equals(cmd)) {
+                return c;
+            }
+        }
+
+        throw new UnknownCommandTypeException("Invalid command type.");
     }
 }

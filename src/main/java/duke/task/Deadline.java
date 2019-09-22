@@ -1,25 +1,21 @@
 package duke.task;
 
-import java.time.LocalDateTime;
+import java.util.Objects;
+
+import duke.utility.DateTime;
 
 public class Deadline extends Task {
-    private LocalDateTime time;
+    private DateTime time;
 
     /**
      * Creates a Deadline object.
      *
-     * @param description The task description.
-     * @param time The string of the deadline time.
+     * @param description The description of the task.
+     * @param time The date and time of the task.
      */
-    public Deadline(String description, String time) {
-        super(description);
-        this.time = LocalDateTime.parse(time, Task.DATETIME_FORMAT);
-    }
-
-    private String getFormattedTime() {
-        assert this.time != null : "No time stored!";
-
-        return this.time.format(Task.DATETIME_FORMAT);
+    public Deadline(String description, TaskPriority priority, DateTime time) {
+        super(description, priority);
+        this.time = Objects.requireNonNull(time);
     }
 
     /**
@@ -28,7 +24,10 @@ public class Deadline extends Task {
      * @return A string of the formatted data.
      */
     public String storageFormat() {
-        return String.format("D | %s | %s", super.storageFormat(), getFormattedTime());
+        return String.format("D | %s | %s",
+                super.storageFormat(),
+                this.time.format()
+        );
     }
 
     /**
@@ -37,6 +36,9 @@ public class Deadline extends Task {
      * @return A string of the formatted data.
      */
     public String displayFormat() {
-        return "[D]" + String.format("%s (by: %s)", super.displayFormat(), getFormattedTime());
+        return "[D]" + String.format("%s (by: %s)",
+                super.displayFormat(),
+                this.time.format()
+        );
     }
 }

@@ -1,10 +1,13 @@
 package duke.command;
 
-import duke.DukeException;
-import duke.Storage;
-import duke.TaskList;
-import duke.Ui;
+import duke.exception.DukeValidationException;
+import duke.utility.DateTime;
+import duke.exception.DukeException;
+import duke.utility.Storage;
+import duke.utility.TaskList;
+import duke.utility.Ui;
 
+import duke.task.TaskPriority;
 import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
@@ -15,21 +18,55 @@ import duke.task.Todo;
 public class AddCommand extends Command {
     private TaskType type;
     private String description;
-    private String time;
-    private String timeEnd;
+    private TaskPriority priority;
+    private DateTime time;
+    private DateTime timeEnd;
 
     /**
      * Creates an AddCommand object.
      *
-     * @param type The task's type.
-     * @param args A varargs describing the arguments for the command.
+     * @param type The type of the task.
+     * @param priority The priority of the task.
+     * @param description The description of the task.
+     * @param dates The dates of the task, if any.
      */
-    public AddCommand(TaskType type, String... args) {
+    public AddCommand(TaskType type, TaskPriority priority, String description, DateTime... dates) {
         super(false);
         this.type = type;
-        this.description = args[0];
-        this.time = args.length > 1 ? args[1] : "";
-        this.timeEnd = args.length > 2 ? args[2] : "";
+        this.priority = priority;
+        this.description = description;
+        this.time = dates.length > 0 ? dates[0] : null;
+        this.timeEnd = dates.length > 1 ? dates[1] : null;
+    }
+
+    public void validate(TaskList taskList) throws DukeValidationException {
+        if (this.type == null) {
+            throw new DukeValidationException("Task type is not set");
+        }
+
+        if (this.description.isEmpty()) {
+            throw new DukeValidationException("Task description is empty.");
+        }
+
+        if (this.priority == null) {
+            throw new DukeValidationException("No task priority set.");
+        }
+
+        if (this.type == TaskType.DEADLINE) {
+            if (this.time == null) {
+                throw new DukeValidationException("No date is set");
+            }
+        }
+
+        if (this.type == TaskType.EVENT) {
+            if (this.time == null) {
+                throw new DukeValidationException("No start date is set");
+            } else if (this.timeEnd == null) {
+                throw new DukeValidationException("No end date is set");
+            } else if (this.timeEnd.compareTo(this.time) < 0) {
+                throw new DukeValidationException("Time range invalid.");
+            }
+        }
     }
 
     /**
@@ -45,17 +82,16 @@ public class AddCommand extends Command {
 
         switch (this.type) {
         case TODO:
-            task = new Todo(this.description);
+            task = new Todo(this.description, this.priority);
             break;
         case DEADLINE:
-            task = new Deadline(this.description, this.time);
+            task = new Deadline(this.description, this.priority, this.time);
             break;
         case EVENT:
-            task = new Event(this.description, this.time, this.timeEnd);
+            task = new Event(this.description, this.priority, this.time, this.timeEnd);
             break;
         default:
-            // TODO: Create error message
-            throw new DukeException("Wrong duke.task type.");
+            throw new DukeException("Task type not yet supported.");
         }
 
         tasks.addTask(task);
