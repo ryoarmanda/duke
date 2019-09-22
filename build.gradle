@@ -18,7 +18,7 @@ repositories {
 }
 
 application {
-    mainClassName = "Launcher"
+    mainClassName = "duke.Launcher"
 }
 
 run {
