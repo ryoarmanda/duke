@@ -1,6 +1,6 @@
 package duke.gui;
 
-import duke.Duke;
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -8,6 +8,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
+
+import duke.Duke;
+import duke.Main;
+import duke.utility.DukeResponse;
 
 public class MainWindow extends AnchorPane {
     @FXML
@@ -48,11 +53,17 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
-        String response = duke.getCommandResponse(input);
+        DukeResponse response = duke.getResponse(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(response, dukeImage)
+                DialogBox.getDukeDialog(response.getMessage(), dukeImage)
         );
         userInput.clear();
+
+        if (response.isExit()) {
+            PauseTransition pause = new PauseTransition(Duration.seconds(3));
+            pause.setOnFinished(event -> Main.stage.hide());
+            pause.play();
+        }
     }
 }

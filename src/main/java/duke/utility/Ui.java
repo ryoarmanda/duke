@@ -116,6 +116,7 @@ public class Ui {
      * @return The response string.
      */
     public String displayBye() {
-        return "Bye. Hope to see you again soon!";
+        return "Bye. Hope to see you again soon!\n"
+                + "I will close in 3 seconds...";
     }
 }

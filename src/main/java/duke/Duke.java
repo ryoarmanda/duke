@@ -2,6 +2,7 @@ package duke;
 
 import duke.command.Command;
 import duke.exception.DukeException;
+import duke.utility.DukeResponse;
 import duke.utility.Parser;
 import duke.utility.Storage;
 import duke.utility.TaskList;
@@ -58,13 +59,13 @@ public class Duke {
      * @param input The raw input from the command-line.
      * @return The response after executing the input.
      */
-    public String getCommandResponse(String input) {
+    public DukeResponse getResponse(String input) {
         try {
             Command c = Parser.parseCommand(input);
             c.validate(this.tasks);
-            return c.execute(this.tasks, this.ui, this.storage);
+            return new DukeResponse(c.execute(this.tasks, this.ui, this.storage), c.isExit());
         } catch (DukeException e) {
-            return e.getMessage();
+            return new DukeResponse(e.getMessage(), false);
         }
     }
 }
