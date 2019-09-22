@@ -23,6 +23,13 @@ public enum TaskPriority {
         return this.code;
     }
 
+    /**
+     * Parses given code to its corresponding task priority.
+     *
+     * @param code The task priority code.
+     * @return The task priority, if found.
+     * @throws UnknownTaskPriorityException if no matching task priority found.
+     */
     public static TaskPriority parse(String code) throws UnknownTaskPriorityException {
         for (TaskPriority p : values()) {
             if (p.code.equals(code)) {

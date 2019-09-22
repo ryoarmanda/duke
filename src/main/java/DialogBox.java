@@ -38,6 +38,13 @@ public class DialogBox extends HBox {
         getChildren().setAll(tmp);
     }
 
+    /**
+     * Creates a user dialog box.
+     *
+     * @param text The user text.
+     * @param img The user image.
+     * @return A DialogBox object representing the dialog box.
+     */
     public static DialogBox getUserDialog(String text, Image img) {
         var db = new DialogBox(text, img);
         db.dialog.setStyle(

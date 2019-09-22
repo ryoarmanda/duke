@@ -22,7 +22,13 @@ public abstract class Command {
         return this.isExit;
     }
 
-    public void validate(TaskList tasks) throws DukeValidationException {
+    /**
+     * Validates the command parameters.
+     *
+     * @param taskList The task list.
+     * @throws DukeValidationException if there are any invalid parameters.
+     */
+    public void validate(TaskList taskList) throws DukeValidationException {
         // No validation by default.
     }
 

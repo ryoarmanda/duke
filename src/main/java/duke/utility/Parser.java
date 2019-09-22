@@ -39,6 +39,8 @@ public class Parser {
             return new ListCommand();
         case BYE:
             return new ByeCommand();
+        default:
+            break;
         }
 
         // Handling commands with parameters
@@ -100,17 +102,15 @@ public class Parser {
 
     private static Command parseTodo(String input) {
         String[] descAndPriority = input.split(" /p ", 2);
-        String description = descAndPriority[0];
 
         checkExistence(descAndPriority, 1, "Please supply the task priority.");
         TaskPriority priority = TaskPriority.parse(descAndPriority[1]);
 
-        return new AddCommand(TaskType.TODO, priority, description);
+        return new AddCommand(TaskType.TODO, priority, descAndPriority[0]);
     }
 
     private static Command parseDeadline(String input) {
         String[] descAndRest = input.split(" /p ", 2);
-        String description = descAndRest[0];
 
         checkExistence(descAndRest, 1, "Please supply the task priority.");
         String[] priorityAndDate = descAndRest[1].split(" /by ", 2);
@@ -119,12 +119,11 @@ public class Parser {
         checkExistence(priorityAndDate, 1, "Please supply the task date.");
         DateTime date = DateTime.parse(priorityAndDate[1]);
 
-        return new AddCommand(TaskType.DEADLINE, priority, description, date);
+        return new AddCommand(TaskType.DEADLINE, priority, descAndRest[0], date);
     }
 
     private static Command parseEvent(String input) {
         String[] descAndRest = input.split(" /p ", 2);
-        String description = descAndRest[0];
 
         checkExistence(descAndRest, 1, "Please supply the task priority.");
         String[] priorityAndDates = descAndRest[1].split(" /at ", 2);
@@ -137,7 +136,7 @@ public class Parser {
         checkExistence(startAndEndDate, 1, "Please supply the task end date.");
         DateTime endDate = DateTime.parse(startAndEndDate[1]);
 
-        return new AddCommand(TaskType.EVENT, priority, description, startDate, endDate);
+        return new AddCommand(TaskType.EVENT, priority, descAndRest[0], startDate, endDate);
     }
 
     private static Command parseDone(String input) {

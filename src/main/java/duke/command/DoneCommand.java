@@ -20,6 +20,12 @@ public class DoneCommand extends Command {
         this.taskIndex = taskIndex;
     }
 
+    /**
+     * Validates the command parameters.
+     *
+     * @param taskList The task list.
+     * @throws DukeValidationException if there are any invalid parameters.
+     */
     public void validate(TaskList taskList) throws DukeValidationException {
         if (this.taskIndex >= taskList.totalTasks()) {
             throw new DukeValidationException("There is no task number " + this.taskIndex);

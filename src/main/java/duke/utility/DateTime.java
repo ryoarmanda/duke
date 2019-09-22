@@ -19,6 +19,13 @@ public class DateTime {
         return this.dateTime;
     }
 
+    /**
+     * Parses the given date and time to a DateTime object.
+     *
+     * @param dateTime The date to be parsed, as a string.
+     * @return A DateTime object containing the parsed date and time.
+     * @throws DukeParseException if parsing failed.
+     */
     public static DateTime parse(String dateTime) throws DukeParseException {
         try {
             return new DateTime(LocalDateTime.parse(dateTime, DATETIME_FORMAT));

@@ -18,6 +18,13 @@ public enum CommandType {
         this.cmd = cmd;
     }
 
+    /**
+     * Parses given command code to its corresponding command type.
+     *
+     * @param cmd The command code.
+     * @return The command type, if found.
+     * @throws UnknownCommandTypeException if no matching command type found.
+     */
     public static CommandType parse(String cmd) throws UnknownCommandTypeException {
         for (CommandType c : values()) {
             if (c.cmd.equals(cmd)) {

@@ -23,6 +23,13 @@ public enum TaskStatus {
         return this.code;
     }
 
+    /**
+     * Parses given code to its corresponding task status.
+     *
+     * @param code The task status code.
+     * @return The task status, if found.
+     * @throws UnknownTaskStatusException if no matching task status found.
+     */
     public static TaskStatus parse(String code) throws UnknownTaskStatusException {
         for (TaskStatus s : values()) {
             if (s.code.equals(code)) {

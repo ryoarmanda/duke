@@ -13,6 +13,13 @@ public enum TaskType {
         this.code = code;
     }
 
+    /**
+     * Parses given code to its corresponding task type.
+     *
+     * @param code The task type code.
+     * @return The task type, if found.
+     * @throws UnknownTaskTypeException if no matching task type found.
+     */
     public static TaskType parse(String code) throws UnknownTaskTypeException {
         for (TaskType t : values()) {
             if (t.code.equals(code)) {

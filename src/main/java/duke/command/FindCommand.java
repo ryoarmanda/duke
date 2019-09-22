@@ -1,6 +1,7 @@
 package duke.command;
 
 import duke.exception.DukeException;
+import duke.exception.DukeValidationException;
 import duke.utility.Storage;
 import duke.utility.TaskList;
 import duke.utility.Ui;
@@ -19,9 +20,15 @@ public class FindCommand extends Command {
         this.keyword = keyword;
     }
 
-    public void validate(TaskList tasks) throws DukeException {
+    /**
+     * Validates the command parameters.
+     *
+     * @param taskList The task list.
+     * @throws DukeValidationException if there are any invalid parameters.
+     */
+    public void validate(TaskList taskList) throws DukeValidationException {
         if (this.keyword.isEmpty()) {
-            throw new DukeException("Keyword is empty");
+            throw new DukeValidationException("Keyword is empty");
         }
     }
 

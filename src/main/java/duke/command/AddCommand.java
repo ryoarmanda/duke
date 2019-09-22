@@ -39,6 +39,12 @@ public class AddCommand extends Command {
         this.timeEnd = dates.length > 1 ? dates[1] : null;
     }
 
+    /**
+     * Validates the command parameters.
+     *
+     * @param taskList The task list.
+     * @throws DukeValidationException if there are any invalid parameters.
+     */
     public void validate(TaskList taskList) throws DukeValidationException {
         if (this.type == null) {
             throw new DukeValidationException("Task type is not set");
