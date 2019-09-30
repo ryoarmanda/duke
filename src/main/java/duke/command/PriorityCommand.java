@@ -1,24 +1,27 @@
 package duke.command;
 
-import duke.exception.DukeException;
 import duke.exception.DukeValidationException;
+import duke.task.Task;
+import duke.task.TaskPriority;
 import duke.utility.DukeResponse;
 import duke.utility.Storage;
 import duke.utility.TaskList;
 import duke.utility.Ui;
-import duke.task.Task;
 
-public class DeleteCommand extends Command {
+public class PriorityCommand extends Command {
     private int taskIndex;
+    private TaskPriority priority;
 
     /**
-     * Creates a DeleteCommand object.
+     * Creates a PriorityCommand object.
      *
      * @param taskIndex The index of the task to be deleted.
+     * @param priority The task priority.
      */
-    public DeleteCommand(int taskIndex) {
+    public PriorityCommand(int taskIndex, TaskPriority priority) {
         super(false);
         this.taskIndex = taskIndex;
+        this.priority = priority;
     }
 
     /**
@@ -34,17 +37,18 @@ public class DeleteCommand extends Command {
     }
 
     /**
-     * Executes the delete command.
+     * Executes the priority command.
      *
      * @param tasks The task list.
      * @param ui The Ui object.
      * @param storage The Storage object.
      * @return The response string.
      */
+    @Override
     public DukeResponse execute(TaskList tasks, Ui ui, Storage storage) {
         Task task = tasks.getTask(this.taskIndex);
-        tasks.deleteTask(this.taskIndex);
+        task.setPriority(this.priority);
         storage.write(tasks);
-        return new DukeResponse(ui.displayDeleteTask(task, tasks.totalTasks()), this.isExit());
+        return new DukeResponse(ui.displayPrioritySet(task), this.isExit());
     }
 }

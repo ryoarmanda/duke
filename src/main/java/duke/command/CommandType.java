@@ -10,6 +10,7 @@ public enum CommandType {
     DONE("done"),
     DELETE("delete"),
     FIND("find"),
+    PRIORITY("priority"),
     BYE("bye");
 
     private final String cmd;

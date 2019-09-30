@@ -8,6 +8,7 @@ import duke.command.DeleteCommand;
 import duke.command.DoneCommand;
 import duke.command.FindCommand;
 import duke.command.ListCommand;
+import duke.command.PriorityCommand;
 
 import duke.exception.DukeParseException;
 
@@ -58,6 +59,8 @@ public class Parser {
             return parseDelete(tokens[1]);
         case FIND:
             return parseFind(tokens[1]);
+        case PRIORITY:
+            return parsePriority(tokens[1]);
         default:
             throw new DukeParseException("Command type not yet supported.");
         }
@@ -76,22 +79,24 @@ public class Parser {
 
         Task task;
         TaskType type = TaskType.parse(args[0]);
-        TaskPriority priority = TaskPriority.parse(args[1]);
+        TaskPriority priority = TaskPriority.parseByCode(args[1]);
         TaskStatus status = TaskStatus.parse(args[2]);
 
         switch (type) {
         case TODO:
-            task = new Todo(args[3], priority);
+            task = new Todo(args[3]);
             break;
         case DEADLINE:
-            task = new Deadline(args[3], priority, DateTime.parse(args[4]));
+            task = new Deadline(args[3], DateTime.parse(args[4]));
             break;
         case EVENT:
-            task = new Event(args[3], priority, DateTime.parse(args[4]), DateTime.parse(args[5]));
+            task = new Event(args[3], DateTime.parse(args[4]), DateTime.parse(args[5]));
             break;
         default:
             throw new DukeParseException("Task type not yet supported.");
         }
+
+        task.setPriority(priority);
 
         if (status == TaskStatus.DONE) {
             task.markAsDone();
@@ -101,42 +106,31 @@ public class Parser {
     }
 
     private static Command parseTodo(String input) {
-        String[] descAndPriority = input.split(" /p ", 2);
-
-        checkExistence(descAndPriority, 1, "Please supply the task priority.");
-        TaskPriority priority = TaskPriority.parse(descAndPriority[1]);
-
-        return new AddCommand(TaskType.TODO, priority, descAndPriority[0]);
+        return new AddCommand(TaskType.TODO, input);
     }
 
     private static Command parseDeadline(String input) {
-        String[] descAndRest = input.split(" /p ", 2);
+        String[] descAndDate = input.split(" /by ", 2);
 
-        checkExistence(descAndRest, 1, "Please supply the task priority.");
-        String[] priorityAndDate = descAndRest[1].split(" /by ", 2);
-        TaskPriority priority = TaskPriority.parse(priorityAndDate[0]);
+        String desc = descAndDate[0];
+        checkExistence(descAndDate, 1, "Please supply the task date.");
+        DateTime date = DateTime.parse(descAndDate[1]);
 
-        checkExistence(priorityAndDate, 1, "Please supply the task date.");
-        DateTime date = DateTime.parse(priorityAndDate[1]);
-
-        return new AddCommand(TaskType.DEADLINE, priority, descAndRest[0], date);
+        return new AddCommand(TaskType.DEADLINE, desc, date);
     }
 
     private static Command parseEvent(String input) {
-        String[] descAndRest = input.split(" /p ", 2);
+        String[] descAndDates = input.split(" /at ", 2);
 
-        checkExistence(descAndRest, 1, "Please supply the task priority.");
-        String[] priorityAndDates = descAndRest[1].split(" /at ", 2);
-        TaskPriority priority = TaskPriority.parse(priorityAndDates[0]);
+        String desc = descAndDates[0];
+        checkExistence(descAndDates, 1, "Please supply the task dates.");
+        String[] startAndEndDate = descAndDates[1].split(" - ", 2);
 
-        checkExistence(priorityAndDates, 1, "Please supply the task dates.");
-        String[] startAndEndDate = priorityAndDates[1].split(" - ", 2);
         DateTime startDate = DateTime.parse(startAndEndDate[0]);
-
         checkExistence(startAndEndDate, 1, "Please supply the task end date.");
         DateTime endDate = DateTime.parse(startAndEndDate[1]);
 
-        return new AddCommand(TaskType.EVENT, priority, descAndRest[0], startDate, endDate);
+        return new AddCommand(TaskType.EVENT, desc, startDate, endDate);
     }
 
     private static Command parseDone(String input) {
@@ -151,6 +145,16 @@ public class Parser {
 
     private static Command parseFind(String input) {
         return new FindCommand(input);
+    }
+
+    private static Command parsePriority(String input) {
+        String[] indexAndPriority = input.split(" ", 2);
+
+        int idx = Integer.parseInt(indexAndPriority[0]) - 1;
+        checkExistence(indexAndPriority, 1, "Please supply the priority for the task");
+        TaskPriority priority = TaskPriority.parseByName(indexAndPriority[1]);
+
+        return new PriorityCommand(idx, priority);
     }
 
     private static void checkExistence(String[] args, int index, String message) throws DukeParseException {

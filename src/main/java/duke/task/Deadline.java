@@ -13,8 +13,8 @@ public class Deadline extends Task {
      * @param description The description of the task.
      * @param time The date and time of the task.
      */
-    public Deadline(String description, TaskPriority priority, DateTime time) {
-        super(description, priority);
+    public Deadline(String description, DateTime time) {
+        super(description);
         this.time = Objects.requireNonNull(time);
     }
 

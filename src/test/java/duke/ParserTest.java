@@ -15,29 +15,8 @@ public class ParserTest {
     }
 
     @Test
-    public void parseCommand_noPriorityInTodo_exceptionThrown() {
-        String input = "todo test";
-
-        assertThrows(DukeParseException.class, () -> Parser.parseCommand(input));
-    }
-
-    @Test
-    public void parseCommand_noPriorityInDeadline_exceptionThrown() {
-        String input = "deadline test";
-
-        assertThrows(DukeParseException.class, () -> Parser.parseCommand(input));
-    }
-
-    @Test
     public void parseCommand_noDateInDeadline_exceptionThrown() {
         String input = "deadline test /p low";
-
-        assertThrows(DukeParseException.class, () -> Parser.parseCommand(input));
-    }
-
-    @Test
-    public void parseCommand_noPriorityInEvent_exceptionThrown() {
-        String input = "event test";
 
         assertThrows(DukeParseException.class, () -> Parser.parseCommand(input));
     }
@@ -68,6 +47,11 @@ public class ParserTest {
         String input = "delete";
 
         assertThrows(DukeParseException.class, () -> Parser.parseCommand(input));
+    }
+
+    @Test
+    public void priorityCommand_noIndexInPriority_exceptionThrown() {
+
     }
 
     @Test

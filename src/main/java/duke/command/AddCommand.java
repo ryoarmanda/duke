@@ -3,11 +3,11 @@ package duke.command;
 import duke.exception.DukeValidationException;
 import duke.utility.DateTime;
 import duke.exception.DukeException;
+import duke.utility.DukeResponse;
 import duke.utility.Storage;
 import duke.utility.TaskList;
 import duke.utility.Ui;
 
-import duke.task.TaskPriority;
 import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
@@ -18,7 +18,6 @@ import duke.task.Todo;
 public class AddCommand extends Command {
     private TaskType type;
     private String description;
-    private TaskPriority priority;
     private DateTime time;
     private DateTime timeEnd;
 
@@ -26,14 +25,12 @@ public class AddCommand extends Command {
      * Creates an AddCommand object.
      *
      * @param type The type of the task.
-     * @param priority The priority of the task.
      * @param description The description of the task.
      * @param dates The dates of the task, if any.
      */
-    public AddCommand(TaskType type, TaskPriority priority, String description, DateTime... dates) {
+    public AddCommand(TaskType type, String description, DateTime... dates) {
         super(false);
         this.type = type;
-        this.priority = priority;
         this.description = description;
         this.time = dates.length > 0 ? dates[0] : null;
         this.timeEnd = dates.length > 1 ? dates[1] : null;
@@ -52,10 +49,6 @@ public class AddCommand extends Command {
 
         if (this.description.isEmpty()) {
             throw new DukeValidationException("Task description is empty.");
-        }
-
-        if (this.priority == null) {
-            throw new DukeValidationException("No task priority set.");
         }
 
         if (this.type == TaskType.DEADLINE) {
@@ -83,18 +76,18 @@ public class AddCommand extends Command {
      * @param storage The Storage object.
      * @return The response string.
      */
-    public String execute(TaskList tasks, Ui ui, Storage storage) throws DukeException {
+    public DukeResponse execute(TaskList tasks, Ui ui, Storage storage) throws DukeException {
         Task task;
 
         switch (this.type) {
         case TODO:
-            task = new Todo(this.description, this.priority);
+            task = new Todo(this.description);
             break;
         case DEADLINE:
-            task = new Deadline(this.description, this.priority, this.time);
+            task = new Deadline(this.description, this.time);
             break;
         case EVENT:
-            task = new Event(this.description, this.priority, this.time, this.timeEnd);
+            task = new Event(this.description, this.time, this.timeEnd);
             break;
         default:
             throw new DukeException("Task type not yet supported.");
@@ -102,6 +95,6 @@ public class AddCommand extends Command {
 
         tasks.addTask(task);
         storage.write(tasks);
-        return ui.displayAddTask(task, tasks.totalTasks());
+        return new DukeResponse(ui.displayAddTask(task, tasks.totalTasks()), this.isExit());
     }
 }

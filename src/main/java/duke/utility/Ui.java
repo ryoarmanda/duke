@@ -110,6 +110,11 @@ public class Ui {
         return response.toString();
     }
 
+    public String displayPrioritySet(Task t) {
+        return "Noted. I have updated the priority of this task:\n"
+                + "  " + t.displayFormat() + "\n";
+    }
+
     /**
      * Displays goodbye message.
      *

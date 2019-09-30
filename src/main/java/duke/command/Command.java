@@ -1,6 +1,7 @@
 package duke.command;
 
 import duke.exception.DukeValidationException;
+import duke.utility.DukeResponse;
 import duke.utility.Storage;
 import duke.utility.TaskList;
 import duke.utility.Ui;
@@ -32,5 +33,5 @@ public abstract class Command {
         // No validation by default.
     }
 
-    public abstract String execute(TaskList tasks, Ui ui, Storage storage);
+    public abstract DukeResponse execute(TaskList tasks, Ui ui, Storage storage);
 }

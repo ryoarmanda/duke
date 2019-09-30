@@ -1,7 +1,6 @@
 package duke.task;
 
 import duke.exception.UnknownTaskStatusException;
-import duke.exception.UnknownTaskTypeException;
 
 public enum TaskStatus {
     DONE("1", "+"),

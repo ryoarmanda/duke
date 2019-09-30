@@ -1,7 +1,7 @@
 package duke.command;
 
-import duke.exception.DukeException;
 import duke.exception.DukeValidationException;
+import duke.utility.DukeResponse;
 import duke.utility.Storage;
 import duke.utility.TaskList;
 import duke.utility.Ui;
@@ -40,7 +40,7 @@ public class FindCommand extends Command {
      * @param storage The Storage object.
      * @return The response string.
      */
-    public String execute(TaskList tasks, Ui ui, Storage storage) {
+    public DukeResponse execute(TaskList tasks, Ui ui, Storage storage) {
         TaskList matchedTasks = new TaskList();
 
         for (int i = 0; i < tasks.totalTasks(); i++) {
@@ -50,6 +50,6 @@ public class FindCommand extends Command {
             }
         }
 
-        return ui.displayFindTask(matchedTasks);
+        return new DukeResponse(ui.displayFindTask(matchedTasks), this.isExit());
     }
 }

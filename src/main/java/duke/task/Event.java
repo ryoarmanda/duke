@@ -15,8 +15,8 @@ public class Event extends Task {
      * @param startTime The starting date and time.
      * @param endTime The ending date and time.
      */
-    public Event(String description, TaskPriority priority, DateTime startTime, DateTime endTime) {
-        super(description, priority);
+    public Event(String description, DateTime startTime, DateTime endTime) {
+        super(description);
         this.startTime = Objects.requireNonNull(startTime);
         this.endTime = Objects.requireNonNull(endTime);
     }

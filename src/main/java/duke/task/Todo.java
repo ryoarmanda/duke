@@ -5,10 +5,9 @@ public class Todo extends Task {
      * Creates a Todo object.
      *
      * @param description The description of the task.
-     * @param priority The priority of the task.
      */
-    public Todo(String description, TaskPriority priority) {
-        super(description, priority);
+    public Todo(String description) {
+        super(description);
     }
 
     /**

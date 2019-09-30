@@ -1,7 +1,5 @@
 package duke.task;
 
-import java.util.Objects;
-
 public class Task {
     private String description;
     private TaskStatus status;
@@ -11,12 +9,11 @@ public class Task {
      * Creates a Task object.
      *
      * @param description The description of the task.
-     * @param priority The priority of the task.
      */
-    public Task(String description, TaskPriority priority) {
+    public Task(String description) {
         this.description = description;
         this.status = TaskStatus.ONGOING;
-        this.priority = Objects.requireNonNull(priority);
+        this.priority = TaskPriority.MEDIUM;
     }
 
     public String getDescription() {
@@ -25,6 +22,10 @@ public class Task {
 
     public void markAsDone() {
         this.status = TaskStatus.DONE;
+    }
+
+    public void setPriority(TaskPriority priority) {
+        this.priority = priority;
     }
 
     /**

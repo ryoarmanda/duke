@@ -1,7 +1,7 @@
 package duke.command;
 
-import duke.exception.DukeException;
 import duke.exception.DukeValidationException;
+import duke.utility.DukeResponse;
 import duke.utility.Storage;
 import duke.utility.TaskList;
 import duke.utility.Ui;
@@ -40,10 +40,10 @@ public class DoneCommand extends Command {
      * @param storage The Storage object.
      * @return The response string.
      */
-    public String execute(TaskList tasks, Ui ui, Storage storage) {
+    public DukeResponse execute(TaskList tasks, Ui ui, Storage storage) {
         Task task = tasks.getTask(this.taskIndex);
         task.markAsDone();
         storage.write(tasks);
-        return ui.displayMarkedDone(task);
+        return new DukeResponse(ui.displayMarkedDone(task), this.isExit());
     }
 }

@@ -30,13 +30,30 @@ public enum TaskPriority {
      * @return The task priority, if found.
      * @throws UnknownTaskPriorityException if no matching task priority found.
      */
-    public static TaskPriority parse(String code) throws UnknownTaskPriorityException {
+    public static TaskPriority parseByCode(String code) throws UnknownTaskPriorityException {
         for (TaskPriority p : values()) {
             if (p.code.equals(code)) {
                 return p;
             }
         }
 
-        throw new UnknownTaskPriorityException("Invalid task priority.");
+        throw new UnknownTaskPriorityException("Invalid task priority code.");
+    }
+
+    /**
+     * Parses given name to its corresponding task priority.
+     *
+     * @param name The task priority name.
+     * @return The task priority, if found.
+     * @throws UnknownTaskPriorityException if no matching task priority found.
+     */
+    public static TaskPriority parseByName(String name) throws UnknownTaskPriorityException {
+        for (TaskPriority p : values()) {
+            if (p.name.equalsIgnoreCase(name)) {
+                return p;
+            }
+        }
+
+        throw new UnknownTaskPriorityException("Invalid task priority name.");
     }
 }

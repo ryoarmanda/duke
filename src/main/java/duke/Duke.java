@@ -60,12 +60,15 @@ public class Duke {
      * @return The response after executing the input.
      */
     public DukeResponse getResponse(String input) {
+        DukeResponse response;
         try {
             Command c = Parser.parseCommand(input);
             c.validate(this.tasks);
-            return new DukeResponse(c.execute(this.tasks, this.ui, this.storage), c.isExit());
+            response = c.execute(this.tasks, this.ui, this.storage);
         } catch (DukeException e) {
-            return new DukeResponse(e.getMessage(), false);
+            response = new DukeResponse(e.getMessage(), false);
         }
+
+        return response;
     }
 }
