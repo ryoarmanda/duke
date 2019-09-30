@@ -1,3 +1,2 @@
-T | L | 1 | Water plant
-D | H | 0 | Paper assignment | 30/09/2019 2359
-E | M | 0 | Annual dinner | 30/09/2019 1800 | 30/09/2019 2000
+T | M | 1 | Water plant
+E | H | 0 | Tech talk | 07/09/2019 1000 | 07/09/2019 1200
