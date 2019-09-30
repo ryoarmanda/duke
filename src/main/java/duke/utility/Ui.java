@@ -9,7 +9,7 @@ public class Ui {
      * @return The response string.
      */
     public String displayLoadSuccess() {
-        return "Data loaded successfully!";
+        return "I have your data ready.";
     }
 
     /**
@@ -18,7 +18,7 @@ public class Ui {
      * @return The response string.
      */
     public String displayLoadError() {
-        return "There was an error in loading data from file.";
+        return "There was an error in preparing your data.";
     }
 
     /**
@@ -27,8 +27,8 @@ public class Ui {
      * @return The response string.
      */
     public String displayWelcome() {
-        return "Hello! I'm Duke\n"
-                + "What can I do for you?";
+        return "Greetings. It is I, Duke, the All Knowing.\n"
+                + "What can I do for you, mortal?";
     }
 
     /**
@@ -77,7 +77,7 @@ public class Ui {
      * @return The response string.
      */
     public String displayMarkedDone(Task t) {
-        return "Nice! I've marked this task as done:\n"
+        return "Good job, mortal. I have marked this task as done:\n"
                 + "  " + t.displayFormat() + "\n";
     }
 
@@ -116,7 +116,7 @@ public class Ui {
      * @return The response string.
      */
     public String displayBye() {
-        return "Bye. Hope to see you again soon!\n"
-                + "I will close in 3 seconds...";
+        return "Farewell, mortal. Come see me again anytime.\n"
+                + "I will A S C E N D in 3 seconds...";
     }
 }
