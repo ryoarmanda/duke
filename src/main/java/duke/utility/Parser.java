@@ -10,6 +10,7 @@ import duke.command.FindCommand;
 import duke.command.ListCommand;
 import duke.command.PriorityCommand;
 
+import duke.exception.DukeException;
 import duke.exception.DukeParseException;
 
 import duke.task.Deadline;
@@ -134,12 +135,12 @@ public class Parser {
     }
 
     private static Command parseDone(String input) {
-        int idx = Integer.parseInt(input) - 1;
+        int idx = parseTaskNumber(input) - 1;
         return new DoneCommand(idx);
     }
 
     private static Command parseDelete(String input) {
-        int idx = Integer.parseInt(input) - 1;
+        int idx = parseTaskNumber(input) - 1;
         return new DeleteCommand(idx);
     }
 
@@ -150,7 +151,7 @@ public class Parser {
     private static Command parsePriority(String input) {
         String[] indexAndPriority = input.split(" ", 2);
 
-        int idx = Integer.parseInt(indexAndPriority[0]) - 1;
+        int idx = parseTaskNumber(indexAndPriority[0]) - 1;
         checkExistence(indexAndPriority, 1, "Please supply the priority for the task");
         TaskPriority priority = TaskPriority.parseByName(indexAndPriority[1]);
 
@@ -162,6 +163,14 @@ public class Parser {
 
         if (args.length <= index) {
             throw new DukeParseException(message);
+        }
+    }
+
+    private static int parseTaskNumber(String s) throws DukeParseException {
+        try {
+            return Integer.parseInt(s);
+        } catch (NumberFormatException e) {
+            throw new DukeException("Invalid task number");
         }
     }
 }

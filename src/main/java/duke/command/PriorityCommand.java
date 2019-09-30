@@ -32,7 +32,7 @@ public class PriorityCommand extends Command {
      */
     public void validate(TaskList taskList) throws DukeValidationException {
         if (this.taskIndex >= taskList.totalTasks()) {
-            throw new DukeValidationException("There is no task number " + this.taskIndex);
+            throw new DukeValidationException("There is no task number " + (this.taskIndex + 1));
         }
     }
 

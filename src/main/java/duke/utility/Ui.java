@@ -101,7 +101,7 @@ public class Ui {
      * @return The response string.
      */
     public String displayFindTask(TaskList matched) {
-        StringBuilder response = new StringBuilder("Here are the matching tasks in your list:");
+        StringBuilder response = new StringBuilder("Here are the matching tasks in your list:\n");
         for (int i = 0; i < matched.totalTasks(); i++) {
             Task t = matched.getTask(i);
             response.append(String.format("%d.%s\n", i + 1, t.displayFormat()));

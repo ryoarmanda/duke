@@ -25,10 +25,9 @@ public class Storage {
     /**
      * Reads the task data from the local save file.
      * If the file is not found, the file will be created.
-     * If there is any error during the file
      *
      * @return tasks The list of tasks parsed from the file.
-     * @throws DukeException if the file is not found.
+     * @throws DukeException if there is any error during the file creation.
      */
     public ArrayList<Task> read() throws DukeException {
         File f = new File(this.filePath);

@@ -45,7 +45,8 @@ public class FindCommand extends Command {
 
         for (int i = 0; i < tasks.totalTasks(); i++) {
             Task t = tasks.getTask(i);
-            if (t.getDescription().contains(this.keyword)) {
+            String taskDesc = t.getDescription().toLowerCase();
+            if (taskDesc.contains(this.keyword.toLowerCase())) {
                 matchedTasks.addTask(t);
             }
         }
