@@ -24,7 +24,8 @@ public class Storage {
 
     /**
      * Reads the task data from the local save file.
-     * If the file is not found, an exception is thrown.
+     * If the file is not found, the file will be created.
+     * If there is any error during the file
      *
      * @return tasks The list of tasks parsed from the file.
      * @throws DukeException if the file is not found.
@@ -32,13 +33,18 @@ public class Storage {
     public ArrayList<Task> read() throws DukeException {
         File f = new File(this.filePath);
         ArrayList<Task> tasks = new ArrayList<Task>();
+
+        if (!f.exists()) {
+            this.createAsNewFile();
+        }
+
         try {
             Scanner sc = new Scanner(f);
             while (sc.hasNextLine()) {
                 tasks.add(Parser.parseTask(sc.nextLine()));
             }
         } catch (FileNotFoundException e) {
-            throw new DukeException("duke.Storage file not found.");
+            throw new DukeException("Unexpected error in creating data file.");
         }
 
         return tasks;
@@ -61,6 +67,16 @@ public class Storage {
             fw.close();
         } catch (IOException e) {
             throw new DukeException("Cannot save tasks to file.");
+        }
+    }
+
+    private void createAsNewFile() throws DukeException {
+        File f = new File(this.filePath);
+        try {
+            f.getParentFile().mkdir();
+            f.createNewFile();
+        } catch (IOException e) {
+            throw new DukeException("Error in creating data file.");
         }
     }
 }
